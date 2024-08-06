@@ -1,0 +1,113 @@
+structure:
+  - path: internal/domain
+  - path: internal/usecase
+  - path: internal/interface-adapter/handler
+  - path: internal/infrastructure/api
+  - path: internal/infrastructure/datasource
+  - path: cmd
+  - if: connectrpc
+    path: internal/interface-adapter/handler/connectrpc
+  - if: connectrpc
+    path: internal/interface-adapter/handler/connectrpc
+  - if: connectrpc
+    path: internal/interface-adapter/handler/connectrpc
+files:
+  - path: README.md
+  - if: designdoc
+    path: docs/DesignDoc.md
+    content: |
+      # Design Doc: ${MODULE_NAME}
+
+      ## Objective
+
+      ## Goal, Non goal
+
+      ### Goal
+
+      ### Non goal
+
+      ## High Level Structure
+
+      - cmd
+      - internal
+        - infrastructure
+          - api
+          - datasource
+        - interface-adapter
+          - handler
+        - usecase
+        - domain
+
+      ## Open Issues
+
+      ## References
+  - if: connectrpc
+    path: internal/interface-adapter/handler/connectrpc/buf.gen.yaml
+    content: |
+      version: v2
+      plugins:
+        - local: protoc-gen-go
+          out: gen
+          opt: paths=source_relative
+        - local: protoc-gen-connect-go
+          out: gen
+          opt: paths=source_relative
+  - if: connectrpc
+    path: internal/interface-adapter/handler/connectrpc/Makefile
+    content: |
+      .PHONY: lint
+      lint:
+      	buf lint
+
+      .PHONY: generate
+      generate:
+      	buf generate
+  - if: connectrpc
+    path: internal/interface-adapter/handler/connectrpc/README.md
+    content: |
+      # Connect
+
+      > Connect is a family of libraries for building browser and gRPC-compatible HTTP APIs.
+
+      https://connectrpc.com/docs/go/getting-started
+
+      ## Lint schema and generate code
+
+      ```bash
+      # requires
+      go install github.com/bufbuild/buf/cmd/buf@latest
+      go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
+      go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+      go install connectrpc.com/connectrpc/cmd/protoc-gen-connect-go@latest
+      ```
+
+      ```bash
+      make lint
+      make generate
+      ```
+  - if: connectrpc
+    path: internal/interface-adapter/handler/connectrpc/api/v1/api.proto
+    content: |
+      syntax = "proto3";
+
+      package api.v1;
+
+      option go_package = "${MODULE_NAME}/internal/interface-adapter/handler/connectrpc/gen/api/v1;apiv1";
+
+      service Service {}
+  - if: connectrpc
+    path: internal/interface-adapter/handler/connectrpc/handler/api/v1/handler.go
+    content: |
+      package api
+
+      import (
+        "context"
+        apiv1 "${MODULE_NAME}/internal/interface-adapter/handler/connectrpc/gen/api/v1"
+        "${MODULE_NAME}/internal/interface-adapter/handler/connectrpc/gen/api/v1/apiv1connect"
+
+        "connectrpc.com/connect"
+      )
+
+      type Handler struct{}
+
+      var _ (apiv1connect.Service) = (*Handler)(nil)
