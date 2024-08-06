@@ -13,6 +13,8 @@ structure:
     path: internal/interface-adapter/handler/connectrpc
 files:
   - path: README.md
+    content: |
+      # ${MODULE_NAME}
   - if: designdoc
     path: docs/DesignDoc.md
     content: |
