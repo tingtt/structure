@@ -26,14 +26,23 @@ func makefileForGoBuild(entryPoints []string) (structure.File, error) {
 }
 
 func buildInstructions(entryPoints []string) []string {
+	if /* entrypoint only cmd/main.go */ len(entryPoints) == 1 && entryPoints[0] == "main.go" {
+		entryPointPath := "cmd/main.go"
+		return []string{buildCommand(entryPointPath, nil /* dest */)}
+	}
 	return slice.Map(entryPoints, func(entryPointName string) string {
-		return buildCommand(path.Join("cmd", entryPointName, "main.go"), entryPointName)
+		entryPointPath := path.Join("cmd", entryPointName, "main.go")
+		dest := &entryPointName
+		return buildCommand(entryPointPath, dest)
 	})
 }
 
-func buildCommand(entrypoint, dest string) string {
-	return fmt.Sprintf(
-		"GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) build -o %s %s",
-		dest, entrypoint,
-	)
+func buildCommand(entrypoint string, dest *string) string {
+	if dest != nil {
+		return fmt.Sprintf(
+			"GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) build -o %s %s",
+			*dest, entrypoint,
+		)
+	}
+	return fmt.Sprintf("GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) build %s", entrypoint)
 }
