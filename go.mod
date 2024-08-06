@@ -1,4 +1,4 @@
-module taku_ting/structure
+module structure
 
 go 1.22.5
 

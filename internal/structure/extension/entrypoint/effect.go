@@ -1,7 +1,7 @@
 package entrypoint_extension
 
 import (
-	"taku_ting/structure/pkg/structure"
+	"structure/pkg/structure"
 )
 
 func Effect(manifest structure.Manifest, entryPoints []string) (structure.Manifest, error) {

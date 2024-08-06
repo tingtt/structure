@@ -5,9 +5,9 @@ import (
 	"errors"
 	"log/slog"
 	"os"
-	entrypoint_extension "taku_ting/structure/internal/structure/extension/entrypoint"
-	modulename_extension "taku_ting/structure/internal/structure/extension/module_name"
-	"taku_ting/structure/pkg/structure"
+	entrypoint_extension "structure/internal/structure/extension/entrypoint"
+	modulename_extension "structure/internal/structure/extension/module_name"
+	"structure/pkg/structure"
 
 	"github.com/spf13/pflag"
 )

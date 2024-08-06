@@ -5,7 +5,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-	"taku_ting/structure/constants"
+	"structure/constants"
 
 	"gopkg.in/yaml.v3"
 )

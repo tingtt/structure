@@ -2,8 +2,8 @@ package modulename_extension
 
 import (
 	"strings"
-	"taku_ting/structure/internal/slice"
-	"taku_ting/structure/pkg/structure"
+	"structure/internal/slice"
+	"structure/pkg/structure"
 )
 
 func Effect(manifest structure.Manifest, moduleName string) structure.Manifest {

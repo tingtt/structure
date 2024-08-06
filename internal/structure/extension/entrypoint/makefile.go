@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"fmt"
 	"path"
-	"taku_ting/structure/internal/slice"
-	"taku_ting/structure/pkg/makefile"
-	"taku_ting/structure/pkg/structure"
+	"structure/internal/slice"
+	"structure/pkg/makefile"
+	"structure/pkg/structure"
 )
 
 func makefileForGoBuild(entryPoints []string) (structure.File, error) {
